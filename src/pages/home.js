@@ -18,10 +18,15 @@ export async function initHomePage() {
       return;
     }
 
-    const featuredListing = listings[0];
+    // Find the first listing that has an image
+    const featuredListing =
+      listings.find((listing) => listing.media?.[0]?.url) || listings[0];
+
+    // Only show the first 6 listings on the homepage
+    const homepageListings = listings.slice(0, 6);
 
     renderFeaturedListing(featuredListing);
-    renderListings(listings);
+    renderListings(homepageListings);
   } catch (error) {
     globalThis.console?.error("Failed to load homepage listings:", error);
   }

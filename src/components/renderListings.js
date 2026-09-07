@@ -1,4 +1,4 @@
-import { createdListingCard } from "./listingCard.js";
+import { createListingCard } from "./listingCard.js";
 
 export function renderListings(listings) {
   const listingsElement = globalThis.document?.querySelector("#listings");
@@ -22,7 +22,7 @@ export function renderListings(listings) {
     </div>
 
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-    ${listings.map((listing) => createdListingCard(listing)).join("")}
+    ${listings.map((listing) => createListingCard(listing)).join("")}
     </div>
     `;
 }
