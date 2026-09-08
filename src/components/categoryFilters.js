@@ -1,4 +1,4 @@
-export function renderCategoryFilters() {
+export function renderCategoryFilters(onCategoryChange) {
   const categoryFilterElement =
     globalThis.document?.querySelector("#category-filters");
 
@@ -52,6 +52,10 @@ export function renderCategoryFilters() {
         activeCategory = button.dataset.category;
 
         renderButtons();
+
+        if (onCategoryChange) {
+          onCategoryChange(activeCategory);
+        }
       });
     });
   }

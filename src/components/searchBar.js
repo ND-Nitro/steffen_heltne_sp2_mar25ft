@@ -1,18 +1,19 @@
-export function renderSearchBar() {
+export function renderSearchBar(onSearch) {
   const searchBarElement = globalThis.document?.querySelector("#search-bar");
 
   if (!searchBarElement) return;
 
   searchBarElement.innerHTML = `
     <div class="relative w-full">
-    <label for="listing-search" class="sr-only">
-    search listings
-    </label>
+      <label for="listing-search" class="sr-only">
+        Search listings
+      </label>
 
-    <span 
-    class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 aria-hidden="true">
-
-     <svg
+      <span
+        class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+        aria-hidden="true"
+      >
+        <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="none"
@@ -20,7 +21,7 @@ export function renderSearchBar() {
           stroke-width="2"
           class="h-4 w-4"
         >
-                 <circle cx="11" cy="11" r="8"></circle>
+          <circle cx="11" cy="11" r="8"></circle>
           <path d="m21 21-4.3-4.3"></path>
         </svg>
       </span>
@@ -33,4 +34,12 @@ export function renderSearchBar() {
       />
     </div>
   `;
+
+  const searchInput = searchBarElement.querySelector("#listing-search");
+
+  searchInput?.addEventListener("input", (event) => {
+    const searchTerm = event.target.value.trim().toLowerCase();
+
+    onSearch(searchTerm);
+  });
 }

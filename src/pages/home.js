@@ -6,10 +6,6 @@ import { renderListings } from "../components/renderListings.js";
 import { getListings } from "../api/listings/getListings.js";
 
 export async function initHomePage() {
-  renderSearchBar();
-  renderCategoryFilters();
-  renderSortListings();
-
   try {
     const listings = await getListings();
 
@@ -18,14 +14,72 @@ export async function initHomePage() {
       return;
     }
 
-    // Find the first listing that has an image
-    const featuredListing =
-      listings.find((listing) => listing.media?.[0]?.url) || listings[0];
+    let searchTerm = "";
+    let activeCategory = "All";
 
-    // Only show the first 6 listings on the homepage
+    // Find all listings that are still active
+    const activeListings = listings.filter(
+      (listing) => new Date(listing.endsAt).getTime() > Date.now(),
+    );
+
+    // Find the active listing that ends first
+    const featuredListing = activeListings.sort(
+      (a, b) => new Date(a.endsAt).getTime() - new Date(b.endsAt).getTime(),
+    )[0];
+
+    // Only show 6 listings when no search is active
     const homepageListings = listings.slice(0, 6);
 
     renderFeaturedListing(featuredListing);
+
+    function updateListings() {
+      let filteredListings = listings;
+
+      // Search listings
+      if (searchTerm) {
+        filteredListings = filteredListings.filter((listing) => {
+          const title = listing.title?.toLowerCase() || "";
+
+          const description = listing.description?.toLowerCase() || "";
+
+          const tags = listing.tags?.join(" ").toLowerCase() || "";
+
+          return (
+            title.includes(searchTerm) ||
+            description.includes(searchTerm) ||
+            tags.includes(searchTerm)
+          );
+        });
+      }
+
+      if (activeCategory !== "All") {
+        filteredListings = filteredListings.filter((listing) =>
+          listing.tags?.some(
+            (tag) => tag.toLowerCase() === activeCategory.toLowerCase(),
+          ),
+        );
+      }
+
+      if (!searchTerm && activeCategory === "All") {
+        renderListings(homepageListings);
+        return;
+      }
+
+      renderListings(filteredListings);
+    }
+
+    renderSearchBar((newSearchTerm) => {
+      searchTerm = newSearchTerm;
+      updateListings();
+    });
+
+    renderCategoryFilters((newCategory) => {
+      activeCategory = newCategory;
+      updateListings();
+    });
+
+    renderSortListings();
+
     renderListings(homepageListings);
   } catch (error) {
     globalThis.console?.error("Failed to load homepage listings:", error);
