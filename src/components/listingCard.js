@@ -89,7 +89,7 @@ export function createListingCard(listing) {
           </div>
 
           <a
-            href="/listing/?id=${listing.id}"
+            href="/listing.html?id=${listing.id}"
             class="rounded-lg bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-600 transition hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             View →
