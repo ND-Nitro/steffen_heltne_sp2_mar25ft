@@ -115,7 +115,7 @@ export function renderFeaturedListing(listing) {
           </button>
 
           <a
-            href="/listing/?id=${listing.id}"
+            href="/listing.html?id=${listing.id}"
             class="rounded-lg border border-gray-300 px-5 py-3 text-center text-sm font-semibold text-gray-900 hover:bg-gray-50"
           >
             View Details
