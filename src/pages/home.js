@@ -4,6 +4,7 @@ import { renderCategoryFilters } from "../components/categoryFilters.js";
 import { renderSortListings } from "../components/sortListings.js";
 import { renderListings } from "../components/renderListings.js";
 import { getListings } from "../api/listings/getListings.js";
+import { getCurrentBid } from "../utils/listingHelpers.js";
 
 export async function initHomePage() {
   try {
@@ -16,6 +17,7 @@ export async function initHomePage() {
 
     let searchTerm = "";
     let activeCategory = "All";
+    let activeSort = "hot"; //this is set to hot as default. that the hot listings will be shown first when the page loads.
 
     // Find all listings that are still active
     const activeListings = listings.filter(
@@ -33,7 +35,7 @@ export async function initHomePage() {
     renderFeaturedListing(featuredListing);
 
     function updateListings() {
-      let filteredListings = listings;
+      let filteredListings = [...listings];
 
       // Search listings
       if (searchTerm) {
@@ -60,12 +62,33 @@ export async function initHomePage() {
         );
       }
 
-      if (!searchTerm && activeCategory === "All") {
+      if (activeSort === "ending-soon") {
+        filteredListings.sort(
+          (a, b) => new Date(a.endsAt).getTime() - new Date(b.endsAt).getTime(),
+        );
+      }
+
+      if (activeSort === "newest") {
+        filteredListings.sort(
+          (a, b) =>
+            new Date(b.created).getTime() - new Date(a.created).getTime(),
+        );
+      }
+
+      if (activeSort === "highest-bid") {
+        filteredListings.sort((a, b) => getCurrentBid(b) - getCurrentBid(a));
+      }
+
+      if (activeSort === "lowest-bid") {
+        filteredListings.sort((a, b) => getCurrentBid(a) - getCurrentBid(b));
+      }
+
+      if (!searchTerm && activeCategory === "All" && activeSort === "hot") {
         renderListings(homepageListings);
         return;
       }
 
-      renderListings(filteredListings);
+      renderListings(filteredListings.slice(0, 6));
     }
 
     renderSearchBar((newSearchTerm) => {
@@ -78,7 +101,10 @@ export async function initHomePage() {
       updateListings();
     });
 
-    renderSortListings();
+    renderSortListings((newSort) => {
+      activeSort = newSort;
+      updateListings();
+    });
 
     renderListings(homepageListings);
   } catch (error) {
