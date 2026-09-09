@@ -87,14 +87,14 @@ export function renderNavbar() {
 
               <div class="flex items-center gap-2">
                 <a
-                  href="/login/"
+                  href="/login.html"
                   class="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium"
                 >
                   Log in
                 </a>
 
                 <a
-                  href="/register/"
+                  href="/register.html"
                   class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white"
                 >
                   Register
