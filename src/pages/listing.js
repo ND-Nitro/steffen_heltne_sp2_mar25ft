@@ -1,4 +1,5 @@
 import { getListing } from "../api/listings/getListing.js";
+import { deleteListing } from "../api/listings/deleteListing.js";
 import { getCurrentBid, getTimeLeft } from "../utils/listingHelpers.js";
 
 export async function initListingPage() {
@@ -7,7 +8,6 @@ export async function initListingPage() {
   if (!listingElement) return;
 
   const params = new globalThis.URLSearchParams(globalThis.location?.search);
-
   const listingId = params.get("id");
 
   if (!listingId) {
@@ -49,10 +49,13 @@ function renderListing(listingElement, listing) {
     listing.seller?.avatar?.url || "/src/assets/images/placeholder-image.png";
 
   const currentBid = getCurrentBid(listing).toLocaleString("no-NO");
-
   const timeLeft = getTimeLeft(listing.endsAt);
-
   const bidCount = listing.bids?.length ?? 0;
+
+  const storedUser = globalThis.localStorage?.getItem("user");
+  const user = storedUser ? JSON.parse(storedUser) : null;
+
+  const isOwner = user?.name === listing.seller?.name;
 
   listingElement.innerHTML = `
     <section class="mx-auto max-w-6xl px-4 py-8">
@@ -86,7 +89,6 @@ function renderListing(listingElement, listing) {
 
           <div class="mt-6 border-t border-gray-200 pt-6">
             <div class="flex items-center gap-3">
-
               <img
                 src="${sellerAvatar}"
                 alt="${sellerName}"
@@ -103,7 +105,6 @@ function renderListing(listingElement, listing) {
                   ${sellerName}
                 </p>
               </div>
-
             </div>
           </div>
 
@@ -111,29 +112,21 @@ function renderListing(listingElement, listing) {
             class="mt-6 grid grid-cols-2 gap-4 border-t border-gray-200 pt-6"
           >
             <div>
-              <p
-                class="text-xs uppercase tracking-wide text-gray-400"
-              >
+              <p class="text-xs uppercase tracking-wide text-gray-400">
                 Current Bid
               </p>
 
-              <p
-                class="mt-1 text-2xl font-bold text-orange-500"
-              >
+              <p class="mt-1 text-2xl font-bold text-orange-500">
                 ${currentBid} cr
               </p>
             </div>
 
             <div>
-              <p
-                class="text-xs uppercase tracking-wide text-gray-400"
-              >
+              <p class="text-xs uppercase tracking-wide text-gray-400">
                 Ends In
               </p>
 
-              <p
-                class="mt-1 font-semibold text-gray-900"
-              >
+              <p class="mt-1 font-semibold text-gray-900">
                 ${timeLeft.short}
               </p>
             </div>
@@ -144,6 +137,29 @@ function renderListing(listingElement, listing) {
               ${bidCount} ${bidCount === 1 ? "bid" : "bids"}
             </p>
           </div>
+
+          ${
+            isOwner
+              ? `
+                <div class="mt-6 flex gap-3 border-t border-gray-200 pt-6">
+                  <a
+                    href="/edit.html?id=${listing.id}"
+                    class="flex-1 rounded-xl border border-gray-300 px-4 py-3 text-center font-semibold text-gray-700 hover:bg-gray-50"
+                  >
+                    Edit Listing
+                  </a>
+
+                  <button
+                    id="delete-listing-button"
+                    type="button"
+                    class="flex-1 rounded-xl bg-red-600 px-4 py-3 font-semibold text-white hover:bg-red-700"
+                  >
+                    Delete Listing
+                  </button>
+                </div>
+              `
+              : ""
+          }
 
         </article>
       </div>
@@ -159,6 +175,38 @@ function renderListing(listingElement, listing) {
       </section>
     </section>
   `;
+
+  if (isOwner) {
+    const deleteButton = listingElement.querySelector("#delete-listing-button");
+
+    deleteButton?.addEventListener("click", () =>
+      handleDeleteListing(listing.id, deleteButton),
+    );
+  }
+}
+
+async function handleDeleteListing(listingId, deleteButton) {
+  const confirmed = window.confirm(
+    "Are you sure you want to delete this listing?",
+  );
+
+  if (!confirmed) return;
+
+  deleteButton.disabled = true;
+  deleteButton.textContent = "Deleting...";
+
+  try {
+    await deleteListing(listingId);
+
+    window.location.href = "/";
+  } catch (error) {
+    globalThis.console?.error("Failed to delete listing:", error);
+
+    window.alert(error.message || "Unable to delete listing.");
+
+    deleteButton.disabled = false;
+    deleteButton.textContent = "Delete Listing";
+  }
 }
 
 function renderBidHistory(bids = []) {
@@ -194,9 +242,7 @@ function renderBidHistory(bids = []) {
             ${
               index === 0
                 ? `
-                  <p
-                    class="text-xs font-semibold text-green-600"
-                  >
+                  <p class="text-xs font-semibold text-green-600">
                     Leading
                   </p>
                 `
