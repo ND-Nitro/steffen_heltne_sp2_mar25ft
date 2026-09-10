@@ -1,5 +1,6 @@
 import { getListing } from "../api/listings/getListing.js";
 import { deleteListing } from "../api/listings/deleteListing.js";
+import { placeBid } from "../api/listings/placeBid.js";
 import { getCurrentBid, getTimeLeft } from "../utils/listingHelpers.js";
 
 export async function initListingPage() {
@@ -48,14 +49,18 @@ function renderListing(listingElement, listing) {
   const sellerAvatar =
     listing.seller?.avatar?.url || "/src/assets/images/placeholder-image.png";
 
-  const currentBid = getCurrentBid(listing).toLocaleString("no-NO");
+  const currentBidAmount = getCurrentBid(listing);
+  const currentBid = currentBidAmount.toLocaleString("no-NO");
+
   const timeLeft = getTimeLeft(listing.endsAt);
   const bidCount = listing.bids?.length ?? 0;
 
   const storedUser = globalThis.localStorage?.getItem("user");
   const user = storedUser ? JSON.parse(storedUser) : null;
 
+  const isLoggedIn = Boolean(user);
   const isOwner = user?.name === listing.seller?.name;
+  const isActive = !timeLeft.ended;
 
   listingElement.innerHTML = `
     <section class="mx-auto max-w-6xl px-4 py-8">
@@ -89,6 +94,7 @@ function renderListing(listingElement, listing) {
 
           <div class="mt-6 border-t border-gray-200 pt-6">
             <div class="flex items-center gap-3">
+
               <img
                 src="${sellerAvatar}"
                 alt="${sellerName}"
@@ -105,6 +111,7 @@ function renderListing(listingElement, listing) {
                   ${sellerName}
                 </p>
               </div>
+
             </div>
           </div>
 
@@ -138,28 +145,13 @@ function renderListing(listingElement, listing) {
             </p>
           </div>
 
-          ${
-            isOwner
-              ? `
-                <div class="mt-6 flex gap-3 border-t border-gray-200 pt-6">
-                  <a
-                    href="/edit.html?id=${listing.id}"
-                    class="flex-1 rounded-xl border border-gray-300 px-4 py-3 text-center font-semibold text-gray-700 hover:bg-gray-50"
-                  >
-                    Edit Listing
-                  </a>
-
-                  <button
-                    id="delete-listing-button"
-                    type="button"
-                    class="flex-1 rounded-xl bg-red-600 px-4 py-3 font-semibold text-white hover:bg-red-700"
-                  >
-                    Delete Listing
-                  </button>
-                </div>
-              `
-              : ""
-          }
+          ${renderListingActions({
+            listing,
+            isLoggedIn,
+            isOwner,
+            isActive,
+            currentBidAmount,
+          })}
 
         </article>
       </div>
@@ -183,10 +175,160 @@ function renderListing(listingElement, listing) {
       handleDeleteListing(listing.id, deleteButton),
     );
   }
+
+  if (isLoggedIn && !isOwner && isActive) {
+    const bidForm = listingElement.querySelector("#bid-form");
+
+    bidForm?.addEventListener("submit", (event) =>
+      handlePlaceBid(event, listing.id, currentBidAmount),
+    );
+  }
+}
+
+function renderListingActions({
+  listing,
+  isLoggedIn,
+  isOwner,
+  isActive,
+  currentBidAmount,
+}) {
+  if (isOwner) {
+    return `
+      <div class="mt-6 flex gap-3 border-t border-gray-200 pt-6">
+        <a
+          href="/edit.html?id=${listing.id}"
+          class="flex-1 rounded-xl border border-gray-300 px-4 py-3 text-center font-semibold text-gray-700 hover:bg-gray-50"
+        >
+          Edit Listing
+        </a>
+
+        <button
+          id="delete-listing-button"
+          type="button"
+          class="flex-1 rounded-xl bg-red-600 px-4 py-3 font-semibold text-white hover:bg-red-700"
+        >
+          Delete Listing
+        </button>
+      </div>
+    `;
+  }
+
+  if (!isActive) {
+    return `
+      <div
+        class="mt-6 rounded-xl bg-gray-100 p-4 text-center font-semibold text-gray-600"
+      >
+        This auction has ended.
+      </div>
+    `;
+  }
+
+  if (!isLoggedIn) {
+    return `
+      <div class="mt-6 border-t border-gray-200 pt-6">
+        <p class="text-sm text-gray-600">
+          You must be logged in to place a bid.
+        </p>
+
+        <a
+          href="/login.html"
+          class="mt-3 block rounded-xl bg-blue-600 px-5 py-3 text-center font-semibold text-white hover:bg-blue-700"
+        >
+          Log in to bid
+        </a>
+      </div>
+    `;
+  }
+
+  return `
+    <form
+      id="bid-form"
+      class="mt-6 border-t border-gray-200 pt-6"
+    >
+      <label
+        for="bid-amount"
+        class="mb-2 block text-sm font-semibold text-gray-700"
+      >
+        Place your bid
+      </label>
+
+      <div class="flex gap-3">
+        <input
+          id="bid-amount"
+          type="number"
+          min="${currentBidAmount + 1}"
+          step="1"
+          required
+          placeholder="${currentBidAmount + 1}"
+          class="min-w-0 flex-1 rounded-xl border border-gray-300 px-4 py-3"
+        />
+
+        <button
+          id="place-bid-button"
+          type="submit"
+          class="rounded-xl bg-blue-600 px-5 py-3 font-semibold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          Place Bid
+        </button>
+      </div>
+
+      <p class="mt-2 text-xs text-gray-500">
+        Your bid must be higher than ${currentBidAmount.toLocaleString(
+          "no-NO",
+        )} cr.
+      </p>
+
+      <p
+        id="bid-error"
+        class="mt-3 hidden rounded-lg bg-red-50 p-3 text-sm text-red-600"
+        role="alert"
+      ></p>
+    </form>
+  `;
+}
+
+async function handlePlaceBid(event, listingId, currentBidAmount) {
+  event.preventDefault();
+
+  const form = event.currentTarget;
+
+  const amountInput = form.querySelector("#bid-amount");
+  const bidButton = form.querySelector("#place-bid-button");
+  const errorElement = form.querySelector("#bid-error");
+
+  const amount = Number(amountInput?.value);
+
+  hideBidError(errorElement);
+
+  if (!Number.isFinite(amount) || amount <= currentBidAmount) {
+    showBidError(
+      errorElement,
+      `Your bid must be higher than ${currentBidAmount.toLocaleString(
+        "no-NO",
+      )} cr.`,
+    );
+    return;
+  }
+
+  bidButton.disabled = true;
+  bidButton.textContent = "Placing Bid...";
+
+  try {
+    await placeBid(listingId, amount);
+
+    globalThis.location.reload();
+  } catch (error) {
+    globalThis.console?.error("Failed to place bid:", error);
+
+    showBidError(errorElement, error.message || "Unable to place bid.");
+
+    bidButton.disabled = false;
+    bidButton.textContent = "Place Bid";
+  }
 }
 
 async function handleDeleteListing(listingId, deleteButton) {
-  const confirmed = window.confirm(
+  const confirmed = globalThis.confirm(
     "Are you sure you want to delete this listing?",
   );
 
@@ -198,15 +340,29 @@ async function handleDeleteListing(listingId, deleteButton) {
   try {
     await deleteListing(listingId);
 
-    window.location.href = "/";
+    globalThis.location.href = "/";
   } catch (error) {
     globalThis.console?.error("Failed to delete listing:", error);
 
-    window.alert(error.message || "Unable to delete listing.");
+    globalThis.alert(error.message || "Unable to delete listing.");
 
     deleteButton.disabled = false;
     deleteButton.textContent = "Delete Listing";
   }
+}
+
+function showBidError(element, message) {
+  if (!element) return;
+
+  element.textContent = message;
+  element.classList.remove("hidden");
+}
+
+function hideBidError(element) {
+  if (!element) return;
+
+  element.textContent = "";
+  element.classList.add("hidden");
 }
 
 function renderBidHistory(bids = []) {
