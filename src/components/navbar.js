@@ -43,7 +43,7 @@ export function renderNavbar() {
                 </a>
 
                 <a
-                  href="/profile/"
+                  href="/profile.html"
                   class="text-sm text-gray-600 hover:text-blue-600"
                 >
                   My Profile
@@ -58,7 +58,7 @@ export function renderNavbar() {
                 </span>
 
                 <a
-                  href="/profile/"
+                  href="/profile.html"
                   aria-label="View profile"
                 >
                   <img

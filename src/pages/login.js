@@ -1,5 +1,6 @@
 // reused login function that is build before and are modified to fit the login page and the login form
 import { loginUser } from "../api/auth/login.js";
+import { createApiKey } from "../api/auth/createApiKey.js";
 
 export function initLoginPage() {
   const loginElement = globalThis.document?.querySelector("#login-page");
@@ -147,6 +148,9 @@ async function handleLoginSubmit(event) {
     const user = await loginUser(email, password);
 
     saveUserSession(user);
+
+    const apiKey = await createApiKey(user.accessToken);
+    globalThis.localStorage.setItem("apiKey", apiKey);
 
     globalThis.location.href = "/";
   } catch (error) {
