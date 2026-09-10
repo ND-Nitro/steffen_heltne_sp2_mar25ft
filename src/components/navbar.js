@@ -1,3 +1,5 @@
+import { logoutUser } from "../api/auth/logout.js";
+
 export function renderNavbar() {
   const navbar = globalThis.document?.querySelector("#navbar");
 
@@ -36,7 +38,7 @@ export function renderNavbar() {
                 </a>
 
                 <a
-                  href="/create/"
+                  href="/create.html"
                   class="text-sm text-gray-600 hover:text-blue-600"
                 >
                   Create Listing
@@ -106,4 +108,8 @@ export function renderNavbar() {
       </div>
     </nav>
   `;
+
+  const logoutButton = navbar.querySelector("#logout-button");
+
+  logoutButton?.addEventListener("click", logoutUser);
 }
