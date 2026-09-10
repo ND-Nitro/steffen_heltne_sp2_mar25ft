@@ -107,12 +107,12 @@ export function renderFeaturedListing(listing) {
         </div>
 
         <div class="mt-5 flex flex-col gap-3 sm:flex-row">
-          <button
-            type="button"
-            class="rounded-lg bg-blue-600 px-5 py-3 text-sm font-semibold text-white hover:bg-blue-700"
+          <a
+            href="/listing.html?id=${listing.id}"
+            class="rounded-lg bg-blue-600 px-5 py-3 text-center text-sm font-semibold text-white hover:bg-blue-700"
           >
             Place Bid
-          </button>
+          </a>
 
           <a
             href="/listing.html?id=${listing.id}"
