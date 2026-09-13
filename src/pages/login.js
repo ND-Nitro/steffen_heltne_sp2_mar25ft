@@ -1,3 +1,4 @@
+import { sitePath } from "../utils/sitePath.js";
 // reused login function that is build before and are modified to fit the login page and the login form
 import { loginUser } from "../api/auth/login.js";
 import { createApiKey } from "../api/auth/createApiKey.js";
@@ -96,7 +97,7 @@ function renderLoginForm(loginElement) {
           </p>
 
           <a
-            href="/register.html"
+            href="${sitePath("register.html")}"
             class="mt-2 inline-block text-sm font-semibold text-blue-600 hover:underline"
           >
             Create account
@@ -152,7 +153,7 @@ async function handleLoginSubmit(event) {
     const apiKey = await createApiKey(user.accessToken);
     globalThis.localStorage.setItem("apiKey", apiKey);
 
-    globalThis.location.href = "/";
+    globalThis.location.href = sitePath();
   } catch (error) {
     showError(errorElement, error.message || "Unable to log in.");
   } finally {

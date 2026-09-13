@@ -1,3 +1,4 @@
+import { sitePath } from "../utils/sitePath.js";
 import { logoutUser } from "../api/auth/logout.js";
 import { getProfile } from "../api/profile/getProfile.js";
 
@@ -15,7 +16,7 @@ export function renderNavbar() {
     <nav class="border-b border-gray-200 bg-white">
       <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
 
-        <a href="/" class="flex items-center gap-2 text-xl font-bold">
+        <a href="${sitePath()}" class="flex items-center gap-2 text-xl font-bold">
           <span
             class="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white"
           >
@@ -32,21 +33,21 @@ export function renderNavbar() {
             ? `
               <div class="hidden items-center gap-6 md:flex">
                 <a
-                  href="/#browse"
+                  href="${sitePath("#browse")}"
                   class="text-sm font-medium text-blue-600"
                 >
                   Browse
                 </a>
 
                 <a
-                  href="/create.html"
+                  href="${sitePath("create.html")}"
                   class="text-sm text-gray-600 hover:text-blue-600"
                 >
                   Create Listing
                 </a>
 
                 <a
-                  href="/profile.html"
+                  href="${sitePath("profile.html")}"
                   class="text-sm text-gray-600 hover:text-blue-600"
                 >
                   My Profile
@@ -62,7 +63,7 @@ export function renderNavbar() {
                 </span>
 
                 <a
-                  href="/profile.html"
+                  href="${sitePath("profile.html")}"
                   aria-label="View profile"
                 >
                   <img
@@ -87,7 +88,7 @@ export function renderNavbar() {
             `
             : `
               <a
-                href="/#browse"
+                href="${sitePath("#browse")}"
                 class="hidden text-sm font-medium text-blue-600 md:block"
               >
                 Browse
@@ -95,14 +96,14 @@ export function renderNavbar() {
 
               <div class="flex items-center gap-2">
                 <a
-                  href="/login.html"
+                  href="${sitePath("login.html")}"
                   class="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium"
                 >
                   Log in
                 </a>
 
                 <a
-                  href="/register.html"
+                  href="${sitePath("register.html")}"
                   class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white"
                 >
                   Register

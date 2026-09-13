@@ -1,3 +1,4 @@
+import { sitePath } from "../utils/sitePath.js";
 import { getListing } from "../api/listings/getListing.js";
 import { deleteListing } from "../api/listings/deleteListing.js";
 import { placeBid } from "../api/listings/placeBid.js";
@@ -256,7 +257,7 @@ function renderListingActions({
     return `
       <div class="mt-6 flex gap-3 border-t border-gray-200 pt-6">
         <a
-          href="/edit.html?id=${listing.id}"
+          href="${sitePath(`edit.html?id=${listing.id}`)}"
           class="flex-1 rounded-xl border border-gray-300 px-4 py-3 text-center font-semibold text-gray-700 hover:bg-gray-50"
         >
           Edit Listing
@@ -291,7 +292,7 @@ function renderListingActions({
         </p>
 
         <a
-          href="/login.html"
+          href="${sitePath("login.html")}"
           class="mt-3 block rounded-xl bg-blue-600 px-5 py-3 text-center font-semibold text-white hover:bg-blue-700"
         >
           Log in to bid
@@ -400,7 +401,7 @@ async function handleDeleteListing(listingId, deleteButton) {
   try {
     await deleteListing(listingId);
 
-    globalThis.location.href = "/";
+    globalThis.location.href = sitePath();
   } catch (error) {
     globalThis.console?.error("Failed to delete listing:", error);
 

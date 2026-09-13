@@ -1,3 +1,4 @@
+import { sitePath } from "../utils/sitePath.js";
 import { getProfile } from "../api/profile/getProfile.js";
 import { getProfileBids } from "../api/profile/getProfileBids.js";
 import { updateProfile } from "../api/profile/updateProfile.js";
@@ -10,7 +11,7 @@ export async function initProfilePage() {
   const storedUser = window.localStorage.getItem("user");
 
   if (!storedUser) {
-    window.location.href = "/login.html";
+    window.location.href = sitePath("login.html");
     return;
   }
 
@@ -101,7 +102,7 @@ function renderProfile(profileElement, profile, bids = []) {
 
       <div class="mt-8 flex flex-wrap gap-3">
         <a
-          href="/create.html"
+          href="${sitePath("create.html")}"
           class="rounded-xl bg-blue-600 px-5 py-3 font-semibold text-white hover:bg-blue-700"
         >
           Create Listing
@@ -393,7 +394,7 @@ function renderListingCard(listing) {
         </h3>
 
         <a
-          href="/listing.html?id=${listing.id}"
+          href="${sitePath(`listing.html?id=${listing.id}`)}"
           class="mt-4 inline-block font-semibold text-blue-600 hover:underline"
         >
           View Listing

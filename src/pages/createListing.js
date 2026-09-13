@@ -1,3 +1,4 @@
+import { sitePath } from "../utils/sitePath.js";
 import { createListing } from "../api/listings/createListing.js";
 
 export function initCreateListingPage() {
@@ -8,7 +9,7 @@ export function initCreateListingPage() {
   const storedUser = window.localStorage.getItem("user");
 
   if (!storedUser) {
-    window.location.href = "/login.html";
+    window.location.href = sitePath("login.html");
     return;
   }
 
@@ -173,7 +174,7 @@ function renderCreateListingForm(createElement) {
 
           <div class="flex gap-3">
             <a
-              href="/"
+              href="${sitePath()}"
               class="flex-1 rounded-xl border border-gray-300 px-5 py-3 text-center font-semibold"
             >
               Cancel

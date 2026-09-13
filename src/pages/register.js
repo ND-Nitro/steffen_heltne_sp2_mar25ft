@@ -1,3 +1,4 @@
+import { sitePath } from "../utils/sitePath.js";
 import { registerUser } from "../api/auth/register.js";
 
 export function initRegisterPage() {
@@ -93,7 +94,7 @@ export function initRegisterPage() {
           Already have an account?
 
           <a
-            href="/login.html"
+            href="${sitePath("login.html")}"
             class="font-semibold text-blue-600 hover:underline"
           >
             Log in
@@ -146,7 +147,7 @@ async function handleRegister(event) {
   try {
     await registerUser(name, email, password);
 
-    window.location.href = "/login.html";
+    window.location.href = sitePath("login.html");
   } catch (error) {
     showError(errorElement, error.message || "Unable to register account.");
 

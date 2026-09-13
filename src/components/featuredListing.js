@@ -1,3 +1,4 @@
+import { sitePath } from "../utils/sitePath.js";
 import { getCurrentBid, getTimeLeft } from "../utils/listingHelpers.js";
 
 let countdownIntervalId;
@@ -108,14 +109,14 @@ export function renderFeaturedListing(listing) {
 
         <div class="mt-5 flex flex-col gap-3 sm:flex-row">
           <a
-            href="/listing.html?id=${listing.id}"
+            href="${sitePath(`listing.html?id=${listing.id}`)}"
             class="rounded-lg bg-blue-600 px-5 py-3 text-center text-sm font-semibold text-white hover:bg-blue-700"
           >
             Place Bid
           </a>
 
           <a
-            href="/listing.html?id=${listing.id}"
+            href="${sitePath(`listing.html?id=${listing.id}`)}"
             class="rounded-lg border border-gray-300 px-5 py-3 text-center text-sm font-semibold text-gray-900 hover:bg-gray-50"
           >
             View Details

@@ -1,3 +1,4 @@
+import { sitePath } from "../utils/sitePath.js";
 import { getListing } from "../api/listings/getListing.js";
 import { updateListing } from "../api/listings/updateListing.js";
 
@@ -9,7 +10,7 @@ export async function initEditListingPage() {
   const storedUser = window.localStorage.getItem("user");
 
   if (!storedUser) {
-    window.location.href = "/login.html";
+    window.location.href = sitePath("login.html");
     return;
   }
 
@@ -126,7 +127,7 @@ function renderEditForm(editElement, listing) {
 
           <div class="flex gap-3">
             <a
-              href="/listing.html?id=${listing.id}"
+              href="${sitePath(`listing.html?id=${listing.id}`)}"
               class="flex-1 rounded-xl border border-gray-300 px-5 py-3 text-center font-semibold"
             >
               Cancel
