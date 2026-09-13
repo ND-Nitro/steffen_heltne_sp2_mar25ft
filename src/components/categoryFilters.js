@@ -1,3 +1,8 @@
+/**
+ * Renders the listing category filters.
+ * @param {Function} onCategoryChange - Callback executed when a category is selected.
+ * @returns {void}
+ */
 export function renderCategoryFilters(onCategoryChange) {
   const categoryFilterElement =
     globalThis.document?.querySelector("#category-filters");

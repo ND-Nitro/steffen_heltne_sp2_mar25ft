@@ -1,5 +1,10 @@
 import { API_BASE_URL, API_ENDPOINTS } from "../config.js";
 
+/**
+ * Fetches auction listings from the Noroff API.
+ * @returns {Promise<Array>} An array of auction listings.
+ * @throws {Error} If the listings cannot be fetched.
+ */
 export async function getListings() {
   const url = `${API_BASE_URL}${API_ENDPOINTS.auction.listings}?_active=true&_bids=true&_seller=true`;
 

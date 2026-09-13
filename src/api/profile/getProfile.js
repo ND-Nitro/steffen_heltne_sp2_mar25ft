@@ -1,6 +1,12 @@
 import { API_BASE_URL, API_ENDPOINTS } from "../config.js";
 import { createApiKey } from "../auth/createApiKey.js";
 
+/**
+ * Fetches a user profile from the Noroff Auction API.
+ * @param {string} username - The profile name to fetch.
+ * @returns {Promise<Object>} The requested profile.
+ * @throws {Error} If the profile cannot be fetched.
+ */
 export async function getProfile(username) {
   const accessToken = window.localStorage.getItem("accessToken");
 

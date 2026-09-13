@@ -1,5 +1,11 @@
 import { API_BASE_URL, API_ENDPOINTS } from "../config.js";
 
+/**
+ * Creates a Noroff API key for an authenticated user.
+ * @param {string} accessToken - The user's access token.
+ * @returns {Promise<Object>} The created API key data.
+ * @throws {Error} If the API request fails.
+ */
 export async function createApiKey(accessToken) {
   const url = `${API_BASE_URL}${API_ENDPOINTS.auth.apiKey}`;
 

@@ -3,6 +3,11 @@ import { getCurrentBid, getTimeLeft } from "../utils/listingHelpers.js";
 
 let countdownIntervalId;
 
+/**
+ * Renders the featured auction listing.
+ * @param {Object} listing - The listing to display.
+ * @returns {void}
+ */
 export function renderFeaturedListing(listing) {
   const featuredListingElement =
     globalThis.document?.querySelector("#featured-listing");
@@ -129,6 +134,11 @@ export function renderFeaturedListing(listing) {
   startCountdown(listing.endsAt);
 }
 
+/**
+ * Formats a remaining time value for display.
+ * @param {number} timeLeft - Remaining time in milliseconds.
+ * @returns {string} A human-readable countdown.
+ */
 function formatCountdown(timeLeft) {
   if (timeLeft.ended) {
     return "ENDED";
@@ -137,6 +147,11 @@ function formatCountdown(timeLeft) {
   return `${timeLeft.days} : ${timeLeft.hours} : ${timeLeft.minutes} : ${timeLeft.seconds}`;
 }
 
+/**
+ * Starts the live countdown for the featured listing.
+ * @param {string} endsAt - The listing end date.
+ * @returns {void}
+ */
 function startCountdown(endsAt) {
   if (countdownIntervalId) {
     globalThis.clearInterval(countdownIntervalId);

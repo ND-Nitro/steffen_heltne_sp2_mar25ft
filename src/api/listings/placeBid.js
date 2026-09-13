@@ -1,5 +1,12 @@
 import { API_BASE_URL, API_ENDPOINTS } from "../config.js";
 
+/**
+ * Places a bid on an auction listing.
+ * @param {string} id - The listing ID.
+ * @param {number} amount - The bid amount in credits.
+ * @returns {Promise<Object>} The updated bid data.
+ * @throws {Error} If the bid cannot be placed.
+ */
 export async function placeBid(id, amount) {
   const accessToken = window.localStorage.getItem("accessToken");
   const apiKey = window.localStorage.getItem("apiKey");

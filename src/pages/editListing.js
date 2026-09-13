@@ -2,6 +2,10 @@ import { sitePath } from "../utils/sitePath.js";
 import { getListing } from "../api/listings/getListing.js";
 import { updateListing } from "../api/listings/updateListing.js";
 
+/**
+ * Initializes the edit listing page and loads the requested listing.
+ * @returns {Promise<void>}
+ */
 export async function initEditListingPage() {
   const editElement = document.querySelector("#edit-listing-page");
 
@@ -154,6 +158,12 @@ function renderEditForm(editElement, listing) {
   );
 }
 
+/**
+ * Handles submission of the edit listing form.
+ * @param {SubmitEvent} event - The form submission event.
+ * @param {string} id - The listing ID.
+ * @returns {Promise<void>}
+ */
 async function handleUpdateListing(event, id) {
   event.preventDefault();
 
@@ -217,6 +227,11 @@ function showFormError(element, message) {
   element.classList.remove("hidden");
 }
 
+/**
+ * Escapes unsafe HTML characters before rendering user-provided content.
+ * @param {string} value - The value to escape.
+ * @returns {string} The escaped value.
+ */
 function escapeHtml(value) {
   return String(value)
     .replaceAll("&", "&amp;")

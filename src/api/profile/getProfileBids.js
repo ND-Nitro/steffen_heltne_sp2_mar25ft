@@ -1,5 +1,11 @@
 import { API_BASE_URL, API_ENDPOINTS } from "../config.js";
 
+/**
+ * Fetches listings the specified profile has bid on.
+ * @param {string} username - The profile name.
+ * @returns {Promise<Array>} The user's bid history.
+ * @throws {Error} If the request fails.
+ */
 export async function getProfileBids(username) {
   const accessToken = window.localStorage.getItem("accessToken");
   const apiKey = window.localStorage.getItem("apiKey");

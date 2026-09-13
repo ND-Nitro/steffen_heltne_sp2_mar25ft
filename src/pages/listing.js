@@ -4,6 +4,10 @@ import { deleteListing } from "../api/listings/deleteListing.js";
 import { placeBid } from "../api/listings/placeBid.js";
 import { getCurrentBid, getTimeLeft } from "../utils/listingHelpers.js";
 
+/**
+ * Initializes the single listing page.
+ * @returns {Promise<void>}
+ */
 export async function initListingPage() {
   const listingElement = globalThis.document?.querySelector("#listing-page");
 
@@ -348,6 +352,13 @@ function renderListingActions({
   `;
 }
 
+/**
+ * Handles submission of a bid on a listing.
+ * @param {SubmitEvent} event - The bid form submission event.
+ * @param {string} listingId - The listing ID.
+ * @param {number} currentBidAmount - The current highest bid.
+ * @returns {Promise<void>}
+ */
 async function handlePlaceBid(event, listingId, currentBidAmount) {
   event.preventDefault();
 
@@ -388,6 +399,12 @@ async function handlePlaceBid(event, listingId, currentBidAmount) {
   }
 }
 
+/**
+ * Deletes a listing after confirmation from its owner.
+ * @param {string} listingId - The listing ID.
+ * @param {HTMLButtonElement} deleteButton - The delete button element.
+ * @returns {Promise<void>}
+ */
 async function handleDeleteListing(listingId, deleteButton) {
   const confirmed = globalThis.confirm(
     "Are you sure you want to delete this listing?",
@@ -426,6 +443,11 @@ function hideBidError(element) {
   element.classList.add("hidden");
 }
 
+/**
+ * Creates the bid history markup for a listing.
+ * @param {Array} bids - The listing bids.
+ * @returns {string} The bid history HTML.
+ */
 function renderBidHistory(bids = []) {
   if (bids.length === 0) {
     return `

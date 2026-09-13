@@ -2,6 +2,10 @@ import { sitePath } from "../utils/sitePath.js";
 import { logoutUser } from "../api/auth/logout.js";
 import { getProfile } from "../api/profile/getProfile.js";
 
+/**
+ * Renders the navigation bar based on authentication state.
+ * @returns {void}
+ */
 export function renderNavbar() {
   const navbar = globalThis.document?.querySelector("#navbar");
 
@@ -125,6 +129,12 @@ export function renderNavbar() {
   }
 }
 
+/**
+ * Updates the navbar with the authenticated user's profile data and credits.
+ * @param {HTMLElement} navbar - The navbar element.
+ * @param {Object} user - The stored user data.
+ * @returns {Promise<void>}
+ */
 async function updateNavbarProfile(navbar, user) {
   const creditsElement = navbar.querySelector("#navbar-credits");
   const avatarElement = navbar.querySelector("#navbar-avatar");

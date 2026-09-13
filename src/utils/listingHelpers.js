@@ -1,3 +1,8 @@
+/**
+ * Gets the highest current bid for a listing.
+ * @param {Object} listing - The auction listing.
+ * @returns {number} The current highest bid amount.
+ */
 export function getCurrentBid(listing) {
   const bids = listing.bids || [];
 
@@ -8,6 +13,11 @@ export function getCurrentBid(listing) {
   return Math.max(...bids.map((bid) => bid.amount));
 }
 
+/**
+ * Calculates the remaining time until a listing ends.
+ * @param {string} endsAt - The listing end date.
+ * @returns {Object} Remaining time information.
+ */
 export function getTimeLeft(endsAt) {
   const endTime = new Date(endsAt).getTime();
   const now = Date.now();

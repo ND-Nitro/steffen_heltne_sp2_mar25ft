@@ -1,6 +1,11 @@
 import { sitePath } from "../utils/sitePath.js";
 import { getCurrentBid, getTimeLeft } from "../utils/listingHelpers.js";
 
+/**
+ * Creates the HTML markup for an auction listing card.
+ * @param {Object} listing - The listing data.
+ * @returns {string} The listing card HTML.
+ */
 export function createListingCard(listing) {
   const image =
     listing.media?.[0]?.url || "/src/assets/images/placeholder-image.png";

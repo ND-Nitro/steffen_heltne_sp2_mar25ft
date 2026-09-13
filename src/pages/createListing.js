@@ -1,6 +1,10 @@
 import { sitePath } from "../utils/sitePath.js";
 import { createListing } from "../api/listings/createListing.js";
 
+/**
+ * Initializes the create listing page and authentication checks.
+ * @returns {void}
+ */
 export function initCreateListingPage() {
   const createElement = document.querySelector("#create-listing-page");
 
@@ -198,6 +202,11 @@ function renderCreateListingForm(createElement) {
   form?.addEventListener("submit", handleCreateListing);
 }
 
+/**
+ * Handles submission of the create listing form.
+ * @param {SubmitEvent} event - The form submission event.
+ * @returns {Promise<void>}
+ */
 async function handleCreateListing(event) {
   event.preventDefault();
 
@@ -280,6 +289,12 @@ function hideError(errorElement) {
   errorElement.classList.add("hidden");
 }
 
+/**
+ * Updates a form button's loading state.
+ * @param {HTMLButtonElement} button - The submit button.
+ * @param {boolean} isLoading - Whether the form is currently submitting.
+ * @returns {void}
+ */
 function setLoadingState(button, isLoading) {
   if (!button) return;
 

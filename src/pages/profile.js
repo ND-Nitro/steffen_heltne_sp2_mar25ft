@@ -3,6 +3,10 @@ import { getProfile } from "../api/profile/getProfile.js";
 import { getProfileBids } from "../api/profile/getProfileBids.js";
 import { updateProfile } from "../api/profile/updateProfile.js";
 
+/**
+ * Initializes the authenticated user's profile page.
+ * @returns {Promise<void>}
+ */
 export async function initProfilePage() {
   const profileElement = document.querySelector("#profile-page");
 
@@ -290,6 +294,12 @@ function setupProfileTabs(profileElement) {
   });
 }
 
+/**
+ * Handles submission of profile changes.
+ * @param {SubmitEvent} event - The profile form submission event.
+ * @param {string} username - The current profile name.
+ * @returns {Promise<void>}
+ */
 async function handleProfileUpdate(event, username) {
   event.preventDefault();
 
@@ -337,6 +347,11 @@ async function handleProfileUpdate(event, username) {
   }
 }
 
+/**
+ * Extracts unique listings from a user's bid history.
+ * @param {Array} bids - The user's bids.
+ * @returns {Array} Unique listings the user has bid on.
+ */
 function getUniqueBidListings(bids = []) {
   const listings = bids
     .map((bid) => bid.listing)
@@ -347,6 +362,11 @@ function getUniqueBidListings(bids = []) {
   );
 }
 
+/**
+ * Renders listings owned by the current user.
+ * @param {Array} listings - The user's listings.
+ * @returns {string} The listings markup.
+ */
 function renderProfileListings(listings = []) {
   if (listings.length === 0) {
     return `
@@ -359,6 +379,11 @@ function renderProfileListings(listings = []) {
   return listings.map(renderListingCard).join("");
 }
 
+/**
+ * Renders listings the current user has bid on.
+ * @param {Array} listings - Listings from the user's bid history.
+ * @returns {string} The listings markup.
+ */
 function renderBidListings(listings = []) {
   if (listings.length === 0) {
     return `

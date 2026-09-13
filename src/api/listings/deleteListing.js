@@ -1,5 +1,11 @@
 import { API_BASE_URL, API_ENDPOINTS } from "../config.js";
 
+/**
+ * Deletes an auction listing owned by the current user.
+ * @param {string} id - The listing ID.
+ * @returns {Promise<void>}
+ * @throws {Error} If the delete request fails.
+ */
 export async function deleteListing(id) {
   const accessToken = window.localStorage.getItem("accessToken");
   const apiKey = window.localStorage.getItem("apiKey");

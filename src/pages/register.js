@@ -1,6 +1,10 @@
 import { sitePath } from "../utils/sitePath.js";
 import { registerUser } from "../api/auth/register.js";
 
+/**
+ * Initializes the user registration page.
+ * @returns {void}
+ */
 export function initRegisterPage() {
   const registerElement = document.querySelector("#register-page");
 
@@ -109,6 +113,11 @@ export function initRegisterPage() {
   form?.addEventListener("submit", handleRegister);
 }
 
+/**
+ * Handles registration form submission.
+ * @param {SubmitEvent} event - The registration form submission event.
+ * @returns {Promise<void>}
+ */
 async function handleRegister(event) {
   event.preventDefault();
 

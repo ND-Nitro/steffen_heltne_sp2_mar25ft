@@ -1,3 +1,8 @@
+/**
+ * Renders the listing search input.
+ * @param {Function} onSearch - Callback executed when the search value changes.
+ * @returns {void}
+ */
 export function renderSearchBar(onSearch) {
   const searchBarElement = globalThis.document?.querySelector("#search-bar");
 

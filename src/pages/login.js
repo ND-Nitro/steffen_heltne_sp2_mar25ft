@@ -3,6 +3,10 @@ import { sitePath } from "../utils/sitePath.js";
 import { loginUser } from "../api/auth/login.js";
 import { createApiKey } from "../api/auth/createApiKey.js";
 
+/**
+ * Initializes the login page.
+ * @returns {void}
+ */
 export function initLoginPage() {
   const loginElement = globalThis.document?.querySelector("#login-page");
 
@@ -112,6 +116,11 @@ function renderLoginForm(loginElement) {
   loginForm?.addEventListener("submit", handleLoginSubmit);
 }
 
+/**
+ * Handles login form submission and authentication.
+ * @param {SubmitEvent} event - The login form submission event.
+ * @returns {Promise<void>}
+ */
 async function handleLoginSubmit(event) {
   event.preventDefault();
 
@@ -161,6 +170,11 @@ async function handleLoginSubmit(event) {
   }
 }
 
+/**
+ * Stores authenticated user information in local storage.
+ * @param {Object} user - The authenticated user data.
+ * @returns {void}
+ */
 function saveUserSession(user) {
   if (user.accessToken) {
     globalThis.localStorage.setItem("accessToken", user.accessToken);

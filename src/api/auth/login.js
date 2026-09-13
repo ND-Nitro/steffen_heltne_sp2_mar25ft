@@ -1,6 +1,13 @@
 // loing function that is build before and is reused part of it
 import { API_BASE_URL, API_ENDPOINTS } from "../config.js";
 
+/**
+ * Logs in a registered user.
+ * @param {string} email - The user's email address.
+ * @param {string} password - The user's password.
+ * @returns {Promise<Object>} The authenticated user data.
+ * @throws {Error} If login fails.
+ */
 export async function loginUser(email, password) {
   const url = `${API_BASE_URL}${API_ENDPOINTS.auth.login}`;
 

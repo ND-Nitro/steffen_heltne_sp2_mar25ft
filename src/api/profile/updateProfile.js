@@ -1,5 +1,12 @@
 import { API_BASE_URL, API_ENDPOINTS } from "../config.js";
 
+/**
+ * Updates the authenticated user's profile.
+ * @param {string} username - The profile name.
+ * @param {Object} profileData - Bio, avatar and banner data.
+ * @returns {Promise<Object>} The updated profile.
+ * @throws {Error} If the update fails.
+ */
 export async function updateProfile(username, profileData) {
   const accessToken = window.localStorage.getItem("accessToken");
   const apiKey = window.localStorage.getItem("apiKey");

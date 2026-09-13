@@ -1,5 +1,12 @@
 import { API_BASE_URL, API_ENDPOINTS } from "../config.js";
 
+/**
+ * Updates an auction listing owned by the current user.
+ * @param {string} id - The listing ID.
+ * @param {Object} listingData - The updated listing data.
+ * @returns {Promise<Object>} The updated listing.
+ * @throws {Error} If the update fails.
+ */
 export async function updateListing(id, listingData) {
   const accessToken = window.localStorage.getItem("accessToken");
   const apiKey = window.localStorage.getItem("apiKey");

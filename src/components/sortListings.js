@@ -1,4 +1,9 @@
 // this function will render the sort dropdown menu and make the function work  after choise
+/**
+ * Renders the listing sort controls.
+ * @param {Function} onSortChange - Callback executed when the sorting option changes.
+ * @returns {void}
+ */
 export function renderSortListings(onSortChange) {
   const sortElement = globalThis.document?.querySelector("#sort-listings");
 

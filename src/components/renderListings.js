@@ -1,5 +1,10 @@
 import { createListingCard } from "./listingCard.js";
 
+/**
+ * Renders a collection of auction listings.
+ * @param {Array} listings - The listings to display.
+ * @returns {void}
+ */
 export function renderListings(listings) {
   const listingsElement = globalThis.document?.querySelector("#listings");
 

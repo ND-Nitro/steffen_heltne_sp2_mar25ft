@@ -6,6 +6,11 @@ import { renderListings } from "../components/renderListings.js";
 import { getListings } from "../api/listings/getListings.js";
 import { getCurrentBid } from "../utils/listingHelpers.js";
 
+/**
+ * Initializes the home page, loads listings and connects search,
+ * filtering and sorting functionality.
+ * @returns {Promise<void>}
+ */
 export async function initHomePage() {
   try {
     const listings = await getListings();

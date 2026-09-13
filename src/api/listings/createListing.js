@@ -1,5 +1,11 @@
 import { API_BASE_URL, API_ENDPOINTS } from "../config.js";
 
+/**
+ * Creates a new auction listing.
+ * @param {Object} listingData - The listing data to submit.
+ * @returns {Promise<Object>} The created listing.
+ * @throws {Error} If the API request fails.
+ */
 export async function createListing(listingData) {
   const accessToken = window.localStorage.getItem("accessToken");
   const apiKey = window.localStorage.getItem("apiKey");
