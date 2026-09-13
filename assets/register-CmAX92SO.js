@@ -1,4 +1,4 @@
-import{a as e,i as t,t as n}from"./navbar-DS3aPAxg.js";async function r(n,r,i){let a=`${t}${e.auth.register}`,o=await fetch(a,{method:`POST`,headers:{"Content-Type":`application/json`},body:JSON.stringify({name:n,email:r,password:i})}),s=await o.json();if(!o.ok){let e=s.errors?.[0]?.message||`Unable to register account.`;throw Error(e)}return s.data}function i(){let e=document.querySelector(`#register-page`);e&&(e.innerHTML=`
+import{a as e,i as t,o as n,t as r}from"./navbar-Aux6msdz.js";async function i(n,r,i){let a=`${t}${e.auth.register}`,o=await fetch(a,{method:`POST`,headers:{"Content-Type":`application/json`},body:JSON.stringify({name:n,email:r,password:i})}),s=await o.json();if(!o.ok){let e=s.errors?.[0]?.message||`Unable to register account.`;throw Error(e)}return s.data}function a(){let e=document.querySelector(`#register-page`);e&&(e.innerHTML=`
     <section class="mx-auto max-w-md px-4 py-12">
       <div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
         <h1 class="text-3xl font-bold text-gray-950">
@@ -86,7 +86,7 @@ import{a as e,i as t,t as n}from"./navbar-DS3aPAxg.js";async function r(n,r,i){l
           Already have an account?
 
           <a
-            href="/login.html"
+            href="${n(`login.html`)}"
             class="font-semibold text-blue-600 hover:underline"
           >
             Log in
@@ -94,4 +94,4 @@ import{a as e,i as t,t as n}from"./navbar-DS3aPAxg.js";async function r(n,r,i){l
         </p>
       </div>
     </section>
-  `,e.querySelector(`#register-form`)?.addEventListener(`submit`,a))}async function a(e){e.preventDefault();let t=e.currentTarget,n=t.querySelector(`#register-name`)?.value.trim()||``,i=t.querySelector(`#register-email`)?.value.trim()||``,a=t.querySelector(`#register-password`)?.value||``,c=t.querySelector(`#register-error`),l=t.querySelector(`#register-button`);if(s(c),!n){o(c,`Username is required.`);return}if(!i.endsWith(`@stud.noroff.no`)){o(c,`You must use a valid @stud.noroff.no email address.`);return}if(a.length<8){o(c,`Password must be at least 8 characters.`);return}l.disabled=!0,l.textContent=`Creating account...`;try{await r(n,i,a),window.location.href=`/login.html`}catch(e){o(c,e.message||`Unable to register account.`),l.disabled=!1,l.textContent=`Register`}}function o(e,t){e&&(e.textContent=t,e.classList.remove(`hidden`))}function s(e){e&&(e.textContent=``,e.classList.add(`hidden`))}n(),i();
+  `,e.querySelector(`#register-form`)?.addEventListener(`submit`,o))}async function o(e){e.preventDefault();let t=e.currentTarget,r=t.querySelector(`#register-name`)?.value.trim()||``,a=t.querySelector(`#register-email`)?.value.trim()||``,o=t.querySelector(`#register-password`)?.value||``,l=t.querySelector(`#register-error`),u=t.querySelector(`#register-button`);if(c(l),!r){s(l,`Username is required.`);return}if(!a.endsWith(`@stud.noroff.no`)){s(l,`You must use a valid @stud.noroff.no email address.`);return}if(o.length<8){s(l,`Password must be at least 8 characters.`);return}u.disabled=!0,u.textContent=`Creating account...`;try{await i(r,a,o),window.location.href=n(`login.html`)}catch(e){s(l,e.message||`Unable to register account.`),u.disabled=!1,u.textContent=`Register`}}function s(e,t){e&&(e.textContent=t,e.classList.remove(`hidden`))}function c(e){e&&(e.textContent=``,e.classList.add(`hidden`))}r(),a();

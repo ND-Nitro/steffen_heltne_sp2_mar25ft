@@ -1,4 +1,4 @@
-import{a as e,i as t,r as n,t as r}from"./navbar-DS3aPAxg.js";async function i(n,r){let i=`${t}${e.auth.login}`,a=await globalThis.fetch(i,{method:`POST`,headers:{"Content-Type":`application/json`},body:JSON.stringify({email:n,password:r})}),o=await a.json();if(!a.ok){let e=o.errors?.[0]?.message||`Unable to log in.`;throw Error(e)}return o.data}function a(){let e=globalThis.document?.querySelector(`#login-page`);e&&o(e)}function o(e){e.innerHTML=`
+import{a as e,i as t,o as n,r,t as i}from"./navbar-Aux6msdz.js";async function a(n,r){let i=`${t}${e.auth.login}`,a=await globalThis.fetch(i,{method:`POST`,headers:{"Content-Type":`application/json`},body:JSON.stringify({email:n,password:r})}),o=await a.json();if(!a.ok){let e=o.errors?.[0]?.message||`Unable to log in.`;throw Error(e)}return o.data}function o(){let e=globalThis.document?.querySelector(`#login-page`);e&&s(e)}function s(e){e.innerHTML=`
     <section
       class="mx-auto flex min-h-[70vh] max-w-md items-center px-4 py-10"
     >
@@ -83,7 +83,7 @@ import{a as e,i as t,r as n,t as r}from"./navbar-DS3aPAxg.js";async function i(n
           </p>
 
           <a
-            href="/register.html"
+            href="${n(`register.html`)}"
             class="mt-2 inline-block text-sm font-semibold text-blue-600 hover:underline"
           >
             Create account
@@ -91,4 +91,4 @@ import{a as e,i as t,r as n,t as r}from"./navbar-DS3aPAxg.js";async function i(n
         </div>
       </div>
     </section>
-  `,e.querySelector(`#login-form`)?.addEventListener(`submit`,s)}async function s(e){e.preventDefault();let t=e.currentTarget,r=t.querySelector(`#login-email`),a=t.querySelector(`#login-password`),o=t.querySelector(`#login-error`),s=t.querySelector(`#login-button`),f=r?.value.trim().toLowerCase()||``,p=a?.value||``;if(u(o),!f.endsWith(`@stud.noroff.no`)){l(o,`Email must end with @stud.noroff.no`);return}if(!p){l(o,`Please enter your password.`);return}d(s,!0);try{let e=await i(f,p);c(e);let t=await n(e.accessToken);globalThis.localStorage.setItem(`apiKey`,t),globalThis.location.href=`/`}catch(e){l(o,e.message||`Unable to log in.`)}finally{d(s,!1)}}function c(e){e.accessToken&&globalThis.localStorage.setItem(`accessToken`,e.accessToken),globalThis.localStorage.setItem(`user`,JSON.stringify(e))}function l(e,t){e&&(e.textContent=t,e.classList.remove(`hidden`))}function u(e){e&&(e.textContent=``,e.classList.add(`hidden`))}function d(e,t){e&&(e.disabled=t,e.textContent=t?`Logging in...`:`Log in`)}r(),a();
+  `,e.querySelector(`#login-form`)?.addEventListener(`submit`,c)}async function c(e){e.preventDefault();let t=e.currentTarget,i=t.querySelector(`#login-email`),o=t.querySelector(`#login-password`),s=t.querySelector(`#login-error`),c=t.querySelector(`#login-button`),p=i?.value.trim().toLowerCase()||``,m=o?.value||``;if(d(s),!p.endsWith(`@stud.noroff.no`)){u(s,`Email must end with @stud.noroff.no`);return}if(!m){u(s,`Please enter your password.`);return}f(c,!0);try{let e=await a(p,m);l(e);let t=await r(e.accessToken);globalThis.localStorage.setItem(`apiKey`,t),globalThis.location.href=n()}catch(e){u(s,e.message||`Unable to log in.`)}finally{f(c,!1)}}function l(e){e.accessToken&&globalThis.localStorage.setItem(`accessToken`,e.accessToken),globalThis.localStorage.setItem(`user`,JSON.stringify(e))}function u(e,t){e&&(e.textContent=t,e.classList.remove(`hidden`))}function d(e){e&&(e.textContent=``,e.classList.add(`hidden`))}function f(e,t){e&&(e.disabled=t,e.textContent=t?`Logging in...`:`Log in`)}i(),o();
