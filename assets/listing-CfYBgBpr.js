@@ -1,4 +1,4 @@
-import{a as e,i as t,o as n,t as r}from"./navbar-BbcRS07F.js";import{n as i,t as a}from"./listingHelpers-2C99nZkf.js";import{t as o}from"./getListing-Dvfy7j66.js";async function s(n){let r=window.localStorage.getItem(`accessToken`),i=window.localStorage.getItem(`apiKey`);if(!r||!i)throw Error(`You must be logged in to delete a listing.`);let a=`${t}${e.auction.listings}/${n}`,o=await fetch(a,{method:`DELETE`,headers:{Authorization:`Bearer ${r}`,"X-Noroff-API-Key":i}});if(!o.ok){let e=`Unable to delete listing.`;try{e=(await o.json()).errors?.[0]?.message||e}catch{}throw Error(e)}return!0}async function c(n,r){let i=window.localStorage.getItem(`accessToken`),a=window.localStorage.getItem(`apiKey`);if(!i||!a)throw Error(`You must be logged in to place a bid.`);let o=`${t}${e.auction.listings}/${n}/bids`,s=await fetch(o,{method:`POST`,headers:{Authorization:`Bearer ${i}`,"X-Noroff-API-Key":a,"Content-Type":`application/json`},body:JSON.stringify({amount:r})}),c=await s.json();if(!s.ok){let e=c.errors?.[0]?.message||`Unable to place bid.`;throw Error(e)}return c.data}async function l(){let e=globalThis.document?.querySelector(`#listing-page`);if(!e)return;let t=new globalThis.URLSearchParams(globalThis.location?.search).get(`id`);if(!t){e.innerHTML=`
+import{a as e,i as t,o as n,t as r}from"./navbar-DtWy4hFO.js";import{n as i,t as a}from"./listingHelpers-2C99nZkf.js";import{t as o}from"./getListing-CIhLswkE.js";async function s(n){let r=window.localStorage.getItem(`accessToken`),i=window.localStorage.getItem(`apiKey`);if(!r||!i)throw Error(`You must be logged in to delete a listing.`);let a=`${t}${e.auction.listings}/${n}`,o=await fetch(a,{method:`DELETE`,headers:{Authorization:`Bearer ${r}`,"X-Noroff-API-Key":i}});if(!o.ok){let e=`Unable to delete listing.`;try{e=(await o.json()).errors?.[0]?.message||e}catch{}throw Error(e)}return!0}async function c(n,r){let i=window.localStorage.getItem(`accessToken`),a=window.localStorage.getItem(`apiKey`);if(!i||!a)throw Error(`You must be logged in to place a bid.`);let o=`${t}${e.auction.listings}/${n}/bids`,s=await fetch(o,{method:`POST`,headers:{Authorization:`Bearer ${i}`,"X-Noroff-API-Key":a,"Content-Type":`application/json`},body:JSON.stringify({amount:r})}),c=await s.json();if(!s.ok){let e=c.errors?.[0]?.message||`Unable to place bid.`;throw Error(e)}return c.data}async function l(){let e=globalThis.document?.querySelector(`#listing-page`);if(!e)return;let t=new globalThis.URLSearchParams(globalThis.location?.search).get(`id`);if(!t){e.innerHTML=`
       <p class="py-10 text-center text-gray-500">
         Listing not found.
       </p>
@@ -6,33 +6,33 @@ import{a as e,i as t,o as n,t as r}from"./navbar-BbcRS07F.js";import{n as i,t as
       <p class="py-10 text-center text-red-600">
         Failed to load listing.
       </p>
-    `}}function u(e,t){let n=`/src/assets/images/placeholder-image.png`,r=t.media?.length>0?t.media:[{url:n,alt:t.title||`Auction listing`}],o=r[0],s=t.tags?.[0]||`Other`,c=t.seller?.name||`Unknown seller`,l=t.seller?.avatar?.url||`/src/assets/images/placeholder-image.png`,u=a(t),m=u.toLocaleString(`no-NO`),h=i(t.endsAt),_=t.bids?.length??0,v=globalThis.localStorage?.getItem(`user`),y=v?JSON.parse(v):null,b=!!y,x=y?.name===t.seller?.name,S=!h.ended;e.innerHTML=`
+    `}}function u(e,t){let r=n(`images/placeholder-image.webp`),o=t.media?.length>0?t.media:[{url:r,alt:t.title||`Auction listing`}],s=o[0],c=t.tags?.[0]||`Other`,l=t.seller?.name||`Unknown seller`,u=t.seller?.avatar?.url||r,m=a(t),h=m.toLocaleString(`no-NO`),_=i(t.endsAt),v=t.bids?.length??0,y=globalThis.localStorage?.getItem(`user`),b=y?JSON.parse(y):null,x=!!b,S=b?.name===t.seller?.name,C=!_.ended;e.innerHTML=`
     <section class="mx-auto max-w-6xl px-4 py-8">
       <div class="grid gap-8 lg:grid-cols-2">
 
         <div>
           <img
             id="listing-main-image"
-            src="${o.url}"
-            alt="${o.alt||t.title||`Auction listing`}"
-            onerror="this.onerror=null; this.src='${n}';"
+            src="${s.url}"
+            alt="${s.alt||t.title||`Auction listing`}"
+            onerror="this.onerror=null; this.src='${r}';"
             class="h-96 w-full rounded-2xl object-cover"
           />
 
-          ${r.length>1?`
+          ${o.length>1?`
                 <div class="mt-4 grid grid-cols-3 gap-3">
-                  ${r.map((e,r)=>`
+                  ${o.map((e,n)=>`
                         <button
                           type="button"
                           class="listing-thumbnail overflow-hidden rounded-xl border border-gray-200 hover:border-blue-500"
                           data-image-url="${e.url}"
-                          data-image-alt="${e.alt||t.title||`Auction image ${r+1}`}"
-                          aria-label="View image ${r+1}"
+                          data-image-alt="${e.alt||t.title||`Auction image ${n+1}`}"
+                          aria-label="View image ${n+1}"
                         >
                           <img
                             src="${e.url}"
-                            alt="${e.alt||t.title||`Auction image ${r+1}`}"
-                            onerror="this.onerror=null; this.src='${n}';"
+                            alt="${e.alt||t.title||`Auction image ${n+1}`}"
+                            onerror="this.onerror=null; this.src='${r}';"
                             class="h-24 w-full object-cover"
                           />
                         </button>
@@ -47,7 +47,7 @@ import{a as e,i as t,o as n,t as r}from"./navbar-BbcRS07F.js";import{n as i,t as
           <span
             class="inline-block rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600"
           >
-            ${s}
+            ${c}
           </span>
 
           <h1 class="mt-4 text-3xl font-bold text-gray-950">
@@ -62,9 +62,9 @@ import{a as e,i as t,o as n,t as r}from"./navbar-BbcRS07F.js";import{n as i,t as
             <div class="flex items-center gap-3">
 
               <img
-                src="${l}"
-                alt="${c}"
-                onerror="this.onerror=null; this.src='${n}';"
+                src="${u}"
+                alt="${l}"
+                onerror="this.onerror=null; this.src='${r}';"
                 class="h-10 w-10 rounded-full object-cover"
               />
 
@@ -74,7 +74,7 @@ import{a as e,i as t,o as n,t as r}from"./navbar-BbcRS07F.js";import{n as i,t as
                 </p>
 
                 <p class="font-semibold text-gray-900">
-                  ${c}
+                  ${l}
                 </p>
               </div>
 
@@ -90,7 +90,7 @@ import{a as e,i as t,o as n,t as r}from"./navbar-BbcRS07F.js";import{n as i,t as
               </p>
 
               <p class="mt-1 text-2xl font-bold text-orange-500">
-                ${m} cr
+                ${h} cr
               </p>
             </div>
 
@@ -100,25 +100,25 @@ import{a as e,i as t,o as n,t as r}from"./navbar-BbcRS07F.js";import{n as i,t as
               </p>
 
               <p class="mt-1 font-semibold text-gray-900">
-                ${h.short}
+                ${_.short}
               </p>
             </div>
           </div>
 
           <div class="mt-6">
             <p class="text-sm text-gray-500">
-              ${_} ${_===1?`bid`:`bids`}
+              ${v} ${v===1?`bid`:`bids`}
             </p>
           </div>
 
-          ${d({listing:t,isLoggedIn:b,isOwner:x,isActive:S,currentBidAmount:u})}
+          ${d({listing:t,isLoggedIn:x,isOwner:S,isActive:C,currentBidAmount:m})}
 
         </article>
       </div>
 
       <section class="mt-10">
         <h2 class="text-2xl font-bold text-gray-950">
-          Bid History (${_})
+          Bid History (${v})
         </h2>
 
         <div class="mt-4 space-y-3">
@@ -126,7 +126,7 @@ import{a as e,i as t,o as n,t as r}from"./navbar-BbcRS07F.js";import{n as i,t as
         </div>
       </section>
     </section>
-  `;let C=e.querySelector(`#listing-main-image`);if(e.querySelectorAll(`.listing-thumbnail`).forEach(e=>{e.addEventListener(`click`,()=>{C&&(C.src=e.dataset.imageUrl,C.alt=e.dataset.imageAlt)})}),x){let n=e.querySelector(`#delete-listing-button`);n?.addEventListener(`click`,()=>p(t.id,n))}b&&!x&&S&&e.querySelector(`#bid-form`)?.addEventListener(`submit`,e=>f(e,t.id,u))}function d({listing:e,isLoggedIn:t,isOwner:r,isActive:i,currentBidAmount:a}){return r?`
+  `;let w=e.querySelector(`#listing-main-image`);if(e.querySelectorAll(`.listing-thumbnail`).forEach(e=>{e.addEventListener(`click`,()=>{w&&(w.src=e.dataset.imageUrl,w.alt=e.dataset.imageAlt)})}),S){let n=e.querySelector(`#delete-listing-button`);n?.addEventListener(`click`,()=>p(t.id,n))}x&&!S&&C&&e.querySelector(`#bid-form`)?.addEventListener(`submit`,e=>f(e,t.id,m))}function d({listing:e,isLoggedIn:t,isOwner:r,isActive:i,currentBidAmount:a}){return r?`
       <div class="mt-6 flex gap-3 border-t border-gray-200 pt-6">
         <a
           href="${n(`edit.html?id=${e.id}`)}"

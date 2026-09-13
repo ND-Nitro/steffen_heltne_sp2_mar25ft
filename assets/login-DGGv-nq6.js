@@ -1,4 +1,4 @@
-import{a as e,i as t,o as n,r,t as i}from"./navbar-BbcRS07F.js";async function a(n,r){let i=`${t}${e.auth.login}`,a=await globalThis.fetch(i,{method:`POST`,headers:{"Content-Type":`application/json`},body:JSON.stringify({email:n,password:r})}),o=await a.json();if(!a.ok){let e=o.errors?.[0]?.message||`Unable to log in.`;throw Error(e)}return o.data}function o(){let e=globalThis.document?.querySelector(`#login-page`);e&&s(e)}function s(e){e.innerHTML=`
+import{a as e,i as t,o as n,r,t as i}from"./navbar-DtWy4hFO.js";async function a(n,r){let i=`${t}${e.auth.login}`,a=await globalThis.fetch(i,{method:`POST`,headers:{"Content-Type":`application/json`},body:JSON.stringify({email:n,password:r})}),o=await a.json();if(!a.ok){let e=o.errors?.[0]?.message||`Unable to log in.`;throw Error(e)}return o.data}function o(){let e=globalThis.document?.querySelector(`#login-page`);e&&s(e)}function s(e){e.innerHTML=`
     <section
       class="mx-auto flex min-h-[70vh] max-w-md items-center px-4 py-10"
     >

@@ -1,12 +1,12 @@
-import{a as e,i as t,o as n,t as r}from"./navbar-BbcRS07F.js";import{n as i,t as a}from"./listingHelpers-2C99nZkf.js";var o;function s(e){let t=globalThis.document?.querySelector(`#featured-listing`);if(!t)return;let r=e.media?.[0]?.url||`/src/assets/images/placeholder-image.png`,o=e.media?.[0]?.alt||e.title||`Featured listing`,s=e.tags?.[0]||`Featured`,u=a(e).toLocaleString(`no-NO`),d=i(e.endsAt);t.innerHTML=`
+import{a as e,i as t,o as n,t as r}from"./navbar-DtWy4hFO.js";import{n as i,t as a}from"./listingHelpers-2C99nZkf.js";var o;function s(e){let t=globalThis.document?.querySelector(`#featured-listing`);if(!t)return;let r=n(`images/placeholder-image.webp`),o=e.media?.[0]?.url||r,s=e.media?.[0]?.alt||e.title||`Featured listing`,u=e.tags?.[0]||`Featured`,d=a(e).toLocaleString(`no-NO`),f=i(e.endsAt);t.innerHTML=`
     <article
       class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm"
     >
       <div class="relative">
         <img
-          src="${r}"
-          alt="${o}"
-          onerror="this.onerror=null; this.src='/src/assets/images/placeholder-image.png';"
+          src="${o}"
+          alt="${s}"
+          onerror="this.onerror=null; this.src='${r}';"
           class="h-48 w-full object-cover sm:h-56 md:h-72 lg:h-80"
         />
 
@@ -29,7 +29,7 @@ import{a as e,i as t,o as n,t as r}from"./navbar-BbcRS07F.js";import{n as i,t as
         <span
           class="inline-block rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600"
         >
-          ${s}
+          ${u}
         </span>
 
         <h2
@@ -55,7 +55,7 @@ import{a as e,i as t,o as n,t as r}from"./navbar-BbcRS07F.js";import{n as i,t as
             </p>
 
             <p class="mt-1 text-2xl font-bold text-blue-600 sm:text-3xl">
-              ${u} cr
+              ${d} cr
             </p>
           </div>
 
@@ -70,7 +70,7 @@ import{a as e,i as t,o as n,t as r}from"./navbar-BbcRS07F.js";import{n as i,t as
               id="featured-countdown"
               class="mt-1 whitespace-nowrap text-xl font-bold tracking-tight text-orange-500 sm:text-2xl md:text-3xl md:tracking-wide"
             >
-              ${c(d)}
+              ${c(f)}
             </p>
 
             <div
@@ -161,29 +161,29 @@ import{a as e,i as t,o as n,t as r}from"./navbar-BbcRS07F.js";import{n as i,t as
          `).join(``)}
       </select>
     </div>
-  `,t.querySelector(`#listing-sort`)?.addEventListener(`change`,t=>{e(t.target.value)}))}function p(e){let t=e.media?.[0]?.url||`/src/assets/images/placeholder-image.png`,r=e.media?.[0]?.alt||e.title||`Auction listing`,o=e.tags?.[0]||`Other`,s=a(e).toLocaleString(`no-NO`),c=i(e.endsAt),l=e.seller?.name||`Unknown seller`,u=e.seller?.avatar?.url||`/src/assets/images/placeholder-image.png`,d=e._count?.bids??e.bids?.length??0;return`
+  `,t.querySelector(`#listing-sort`)?.addEventListener(`change`,t=>{e(t.target.value)}))}function p(e){let t=n(`images/placeholder-image.webp`),r=e.media?.[0]?.url||t,o=e.media?.[0]?.alt||e.title||`Auction listing`,s=e.tags?.[0]||`Other`,c=a(e).toLocaleString(`no-NO`),l=i(e.endsAt),u=e.seller?.name||`Unknown seller`,d=e.seller?.avatar?.url||t,f=e._count?.bids??e.bids?.length??0;return`
     <article
       class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md"
     >
       <div class="relative">
 
         <img
-          src="${t}"
-          alt="${r}"
-          onerror="this.onerror=null; this.src='/src/assets/images/placeholder-image.png';"
+          src="${r}"
+          alt="${o}"
+          onerror="this.onerror=null; this.src='${t}';"
           class="h-56 w-full object-cover"
         />
 
         <span
           class="absolute left-3 top-3 rounded-full bg-white px-3 py-1 text-xs font-medium text-gray-700 shadow-sm"
         >
-          ${o}
+          ${s}
         </span>
 
         <span
           class="absolute right-3 top-3 rounded-full bg-white px-3 py-1 text-xs font-semibold text-orange-500 shadow-sm"
         >
-          ${c.short}
+          ${l.short}
         </span>
 
       </div>
@@ -196,34 +196,32 @@ import{a as e,i as t,o as n,t as r}from"./navbar-BbcRS07F.js";import{n as i,t as
           ${e.title||`Untitled listing`}
         </h3>
 
-        <!-- Seller -->
         <div class="mt-3 flex items-center gap-2">
 
           <img
-            src="${u}"
-            alt="${l}"
-            onerror="this.onerror=null; this.src='/src/assets/images/placeholder-image.png';"
+            src="${d}"
+            alt="${u}"
+            onerror="this.onerror=null; this.src='${t}';"
             class="h-7 w-7 rounded-full object-cover"
           />
 
           <span class="text-sm text-gray-500">
-            ${l}
+            ${u}
           </span>
 
         </div>
 
-        <!-- Bid information -->
         <div
           class="mt-4 flex items-end justify-between gap-4 border-t border-gray-100 pt-4"
         >
 
           <div>
             <p class="text-xs text-gray-400">
-              ${d} ${d===1?`bid`:`bids`}
+              ${f} ${f===1?`bid`:`bids`}
             </p>
 
             <p class="mt-1 text-xl font-bold text-orange-500">
-              ${s} cr
+              ${c} cr
             </p>
           </div>
 
