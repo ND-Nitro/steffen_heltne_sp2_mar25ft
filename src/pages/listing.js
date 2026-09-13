@@ -36,11 +36,19 @@ export async function initListingPage() {
 }
 
 function renderListing(listingElement, listing) {
-  const image =
-    listing.media?.[0]?.url || "/src/assets/images/placeholder-image.png";
+  const fallbackImage = "/src/assets/images/placeholder-image.png";
 
-  const imageAlt =
-    listing.media?.[0]?.alt || listing.title || "Auction listing";
+  const media =
+    listing.media?.length > 0
+      ? listing.media
+      : [
+          {
+            url: fallbackImage,
+            alt: listing.title || "Auction listing",
+          },
+        ];
+
+  const mainImage = media[0];
 
   const category = listing.tags?.[0] || "Other";
 
@@ -68,11 +76,49 @@ function renderListing(listingElement, listing) {
 
         <div>
           <img
-            src="${image}"
-            alt="${imageAlt}"
-            onerror="this.onerror=null; this.src='/src/assets/images/placeholder-image.png';"
+            id="listing-main-image"
+            src="${mainImage.url}"
+            alt="${mainImage.alt || listing.title || "Auction listing"}"
+            onerror="this.onerror=null; this.src='${fallbackImage}';"
             class="h-96 w-full rounded-2xl object-cover"
           />
+
+          ${
+            media.length > 1
+              ? `
+                <div class="mt-4 grid grid-cols-3 gap-3">
+                  ${media
+                    .map(
+                      (item, index) => `
+                        <button
+                          type="button"
+                          class="listing-thumbnail overflow-hidden rounded-xl border border-gray-200 hover:border-blue-500"
+                          data-image-url="${item.url}"
+                          data-image-alt="${
+                            item.alt ||
+                            listing.title ||
+                            `Auction image ${index + 1}`
+                          }"
+                          aria-label="View image ${index + 1}"
+                        >
+                          <img
+                            src="${item.url}"
+                            alt="${
+                              item.alt ||
+                              listing.title ||
+                              `Auction image ${index + 1}`
+                            }"
+                            onerror="this.onerror=null; this.src='${fallbackImage}';"
+                            class="h-24 w-full object-cover"
+                          />
+                        </button>
+                      `,
+                    )
+                    .join("")}
+                </div>
+              `
+              : ""
+          }
         </div>
 
         <article
@@ -98,7 +144,7 @@ function renderListing(listingElement, listing) {
               <img
                 src="${sellerAvatar}"
                 alt="${sellerName}"
-                onerror="this.onerror=null; this.src='/src/assets/images/placeholder-image.png';"
+                onerror="this.onerror=null; this.src='${fallbackImage}';"
                 class="h-10 w-10 rounded-full object-cover"
               />
 
@@ -167,6 +213,20 @@ function renderListing(listingElement, listing) {
       </section>
     </section>
   `;
+
+  const mainImageElement = listingElement.querySelector("#listing-main-image");
+
+  const thumbnailButtons =
+    listingElement.querySelectorAll(".listing-thumbnail");
+
+  thumbnailButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      if (!mainImageElement) return;
+
+      mainImageElement.src = button.dataset.imageUrl;
+      mainImageElement.alt = button.dataset.imageAlt;
+    });
+  });
 
   if (isOwner) {
     const deleteButton = listingElement.querySelector("#delete-listing-button");
