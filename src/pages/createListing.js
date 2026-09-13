@@ -62,22 +62,66 @@ function renderCreateListingForm(createElement) {
             ></textarea>
           </div>
 
-          <div>
-            <label
-              for="listing-image"
-              class="mb-2 block text-sm font-medium text-gray-700"
-            >
-              Image URL
-            </label>
+          <fieldset class="space-y-3">
+            <legend class="text-sm font-medium text-gray-700">
+              Media gallery
+            </legend>
 
-            <input
-              id="listing-image"
-              name="image"
-              type="url"
-              placeholder="https://example.com/image.jpg"
-              class="w-full rounded-xl border border-gray-200 px-4 py-3"
-            />
-          </div>
+            <p class="text-sm text-gray-500">
+              Add up to 3 image URLs.
+            </p>
+
+            <div>
+              <label
+                for="listing-image-1"
+                class="mb-2 block text-sm text-gray-600"
+              >
+                Image URL 1
+              </label>
+
+              <input
+                id="listing-image-1"
+                name="image-1"
+                type="url"
+                placeholder="https://example.com/image-1.jpg"
+                class="w-full rounded-xl border border-gray-200 px-4 py-3"
+              />
+            </div>
+
+            <div>
+              <label
+                for="listing-image-2"
+                class="mb-2 block text-sm text-gray-600"
+              >
+                Image URL 2
+              </label>
+
+              <input
+                id="listing-image-2"
+                name="image-2"
+                type="url"
+                placeholder="https://example.com/image-2.jpg"
+                class="w-full rounded-xl border border-gray-200 px-4 py-3"
+              />
+            </div>
+
+            <div>
+              <label
+                for="listing-image-3"
+                class="mb-2 block text-sm text-gray-600"
+              >
+                Image URL 3
+              </label>
+
+              <input
+                id="listing-image-3"
+                name="image-3"
+                type="url"
+                placeholder="https://example.com/image-3.jpg"
+                class="w-full rounded-xl border border-gray-200 px-4 py-3"
+              />
+            </div>
+          </fieldset>
 
           <div>
             <label
@@ -161,7 +205,13 @@ async function handleCreateListing(event) {
   const title = form.querySelector("#listing-title")?.value.trim() || "";
   const description =
     form.querySelector("#listing-description")?.value.trim() || "";
-  const imageUrl = form.querySelector("#listing-image")?.value.trim() || "";
+
+  const imageUrls = [
+    form.querySelector("#listing-image-1")?.value.trim() || "",
+    form.querySelector("#listing-image-2")?.value.trim() || "",
+    form.querySelector("#listing-image-3")?.value.trim() || "",
+  ].filter(Boolean);
+
   const category = form.querySelector("#listing-category")?.value || "";
   const deadline = form.querySelector("#listing-deadline")?.value || "";
 
@@ -195,13 +245,11 @@ async function handleCreateListing(event) {
     listingData.tags = [category];
   }
 
-  if (imageUrl) {
-    listingData.media = [
-      {
-        url: imageUrl,
-        alt: title,
-      },
-    ];
+  if (imageUrls.length > 0) {
+    listingData.media = imageUrls.map((url, index) => ({
+      url,
+      alt: `${title} image ${index + 1}`,
+    }));
   }
 
   setLoadingState(submitButton, true);
