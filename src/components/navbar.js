@@ -18,16 +18,22 @@ export function renderNavbar() {
 
   navbar.innerHTML = `
     <nav class="border-b border-gray-200 bg-white">
-      <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
+      <div
+        class="mx-auto flex max-w-7xl items-center justify-between gap-2 px-3 py-3 sm:px-4 sm:py-4"
+      >
 
-        <a href="${sitePath()}" class="flex items-center gap-2 text-xl font-bold">
+        <a
+          href="${sitePath()}"
+          class="flex min-w-0 items-center gap-2 font-bold"
+          aria-label="Blackmarket Inc home"
+        >
           <span
-            class="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white"
+            class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-600 text-white"
           >
             B
           </span>
 
-          <span>
+          <span class="hidden text-lg sm:inline md:text-xl">
             Blackmarket <span class="text-blue-600">Inc</span>
           </span>
         </a>
@@ -58,10 +64,10 @@ export function renderNavbar() {
                 </a>
               </div>
 
-              <div class="flex items-center gap-3">
+              <div class="flex min-w-0 items-center gap-2 sm:gap-3">
                 <span
                   id="navbar-credits"
-                  class="rounded-full border border-yellow-300 bg-yellow-50 px-3 py-2 text-sm font-medium"
+                  class="whitespace-nowrap rounded-full border border-yellow-300 bg-yellow-50 px-2 py-1.5 text-xs font-medium sm:px-3 sm:py-2 sm:text-sm"
                 >
                   Loading...
                 </span>
@@ -69,6 +75,7 @@ export function renderNavbar() {
                 <a
                   href="${sitePath("profile.html")}"
                   aria-label="View profile"
+                  class="shrink-0"
                 >
                   <img
                     id="navbar-avatar"
@@ -77,16 +84,17 @@ export function renderNavbar() {
                       "/src/assets/images/placeholder-image.png"
                     }"
                     alt=""
-                    class="h-9 w-9 rounded-full object-cover"
+                    class="h-8 w-8 rounded-full object-cover sm:h-9 sm:w-9"
                   />
                 </a>
 
                 <button
                   id="logout-button"
                   type="button"
-                  class="rounded-lg border border-gray-300 px-4 py-2 text-sm"
+                  class="shrink-0 rounded-lg border border-gray-300 px-2.5 py-2 text-xs sm:px-4 sm:text-sm"
                 >
-                  Log out
+                  <span class="sm:hidden">Out</span>
+                  <span class="hidden sm:inline">Log out</span>
                 </button>
               </div>
             `
@@ -98,17 +106,17 @@ export function renderNavbar() {
                 Browse
               </a>
 
-              <div class="flex items-center gap-2">
+              <div class="flex shrink-0 items-center gap-2">
                 <a
                   href="${sitePath("login.html")}"
-                  class="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium"
+                  class="rounded-lg border border-gray-300 px-3 py-2 text-xs font-medium sm:px-4 sm:text-sm"
                 >
                   Log in
                 </a>
 
                 <a
                   href="${sitePath("register.html")}"
-                  class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white"
+                  class="rounded-lg bg-blue-600 px-3 py-2 text-xs font-semibold text-white sm:px-4 sm:text-sm"
                 >
                   Register
                 </a>
