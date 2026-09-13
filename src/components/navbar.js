@@ -1,4 +1,5 @@
 import { logoutUser } from "../api/auth/logout.js";
+import { getProfile } from "../api/profile/getProfile.js";
 
 export function renderNavbar() {
   const navbar = globalThis.document?.querySelector("#navbar");
@@ -31,7 +32,7 @@ export function renderNavbar() {
             ? `
               <div class="hidden items-center gap-6 md:flex">
                 <a
-                  href="#browse"
+                  href="/#browse"
                   class="text-sm font-medium text-blue-600"
                 >
                   Browse
@@ -54,9 +55,10 @@ export function renderNavbar() {
 
               <div class="flex items-center gap-3">
                 <span
+                  id="navbar-credits"
                   class="rounded-full border border-yellow-300 bg-yellow-50 px-3 py-2 text-sm font-medium"
                 >
-                  ${user.credits ?? 0} cr
+                  Loading...
                 </span>
 
                 <a
@@ -64,7 +66,11 @@ export function renderNavbar() {
                   aria-label="View profile"
                 >
                   <img
-                    src="${user.avatar?.url ?? "/images/avatar-placeholder.png"}"
+                    id="navbar-avatar"
+                    src="${
+                      user.avatar?.url ||
+                      "/src/assets/images/placeholder-image.png"
+                    }"
                     alt=""
                     class="h-9 w-9 rounded-full object-cover"
                   />
@@ -81,7 +87,7 @@ export function renderNavbar() {
             `
             : `
               <a
-                href="#browse"
+                href="/#browse"
                 class="hidden text-sm font-medium text-blue-600 md:block"
               >
                 Browse
@@ -112,4 +118,31 @@ export function renderNavbar() {
   const logoutButton = navbar.querySelector("#logout-button");
 
   logoutButton?.addEventListener("click", logoutUser);
+
+  if (isLoggedIn) {
+    updateNavbarProfile(navbar, user);
+  }
+}
+
+async function updateNavbarProfile(navbar, user) {
+  const creditsElement = navbar.querySelector("#navbar-credits");
+  const avatarElement = navbar.querySelector("#navbar-avatar");
+
+  try {
+    const profile = await getProfile(user.name);
+
+    if (creditsElement) {
+      creditsElement.textContent = `${profile.credits.toLocaleString("no-NO")} cr`;
+    }
+
+    if (avatarElement && profile.avatar?.url) {
+      avatarElement.src = profile.avatar.url;
+    }
+  } catch (error) {
+    globalThis.console?.error("Failed to load navbar profile:", error);
+
+    if (creditsElement) {
+      creditsElement.textContent = "0 cr";
+    }
+  }
 }
