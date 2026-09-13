@@ -1,4 +1,4 @@
-import{a as e,i as t,o as n,t as r}from"./navbar-Aux6msdz.js";async function i(n,r,i){let a=`${t}${e.auth.register}`,o=await fetch(a,{method:`POST`,headers:{"Content-Type":`application/json`},body:JSON.stringify({name:n,email:r,password:i})}),s=await o.json();if(!o.ok){let e=s.errors?.[0]?.message||`Unable to register account.`;throw Error(e)}return s.data}function a(){let e=document.querySelector(`#register-page`);e&&(e.innerHTML=`
+import{a as e,i as t,o as n,t as r}from"./navbar-BbcRS07F.js";async function i(n,r,i){let a=`${t}${e.auth.register}`,o=await fetch(a,{method:`POST`,headers:{"Content-Type":`application/json`},body:JSON.stringify({name:n,email:r,password:i})}),s=await o.json();if(!o.ok){let e=s.errors?.[0]?.message||`Unable to register account.`;throw Error(e)}return s.data}function a(){let e=document.querySelector(`#register-page`);e&&(e.innerHTML=`
     <section class="mx-auto max-w-md px-4 py-12">
       <div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
         <h1 class="text-3xl font-bold text-gray-950">

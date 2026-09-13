@@ -1,0 +1,1 @@
+import{a as e,i as t}from"./navbar-BbcRS07F.js";async function n(n){let r=`${t}${e.auction.listings}/${n}?_seller=true&_bids=true`,i=await globalThis.fetch(r);if(!i.ok)throw Error(`Failed to fetch listing with id ${n}: ${i.statusText}`);let{data:a}=await i.json();return a}export{n as t};
