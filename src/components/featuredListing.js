@@ -14,8 +14,9 @@ export function renderFeaturedListing(listing) {
 
   if (!featuredListingElement) return;
 
-  const image =
-    listing.media?.[0]?.url || "/src/assets/images/placeholder-image.png";
+  const fallbackImage = sitePath("images/placeholder-image.webp");
+
+  const image = listing.media?.[0]?.url || fallbackImage;
 
   const imageAlt =
     listing.media?.[0]?.alt || listing.title || "Featured listing";
@@ -34,7 +35,7 @@ export function renderFeaturedListing(listing) {
         <img
           src="${image}"
           alt="${imageAlt}"
-          onerror="this.onerror=null; this.src='/src/assets/images/placeholder-image.png';"
+          onerror="this.onerror=null; this.src='${fallbackImage}';"
           class="h-48 w-full object-cover sm:h-56 md:h-72 lg:h-80"
         />
 

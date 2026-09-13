@@ -7,8 +7,9 @@ import { getCurrentBid, getTimeLeft } from "../utils/listingHelpers.js";
  * @returns {string} The listing card HTML.
  */
 export function createListingCard(listing) {
-  const image =
-    listing.media?.[0]?.url || "/src/assets/images/placeholder-image.png";
+  const fallbackImage = sitePath("images/placeholder-image.webp");
+
+  const image = listing.media?.[0]?.url || fallbackImage;
 
   const imageAlt =
     listing.media?.[0]?.alt || listing.title || "Auction listing";
@@ -22,8 +23,7 @@ export function createListingCard(listing) {
   // Seller information
   const sellerName = listing.seller?.name || "Unknown seller";
 
-  const sellerAvatar =
-    listing.seller?.avatar?.url || "/src/assets/images/placeholder-image.png";
+  const sellerAvatar = listing.seller?.avatar?.url || fallbackImage;
 
   // Number of bids
   const bidCount = listing._count?.bids ?? listing.bids?.length ?? 0;
@@ -37,7 +37,7 @@ export function createListingCard(listing) {
         <img
           src="${image}"
           alt="${imageAlt}"
-          onerror="this.onerror=null; this.src='/src/assets/images/placeholder-image.png';"
+          onerror="this.onerror=null; this.src='${fallbackImage}';"
           class="h-56 w-full object-cover"
         />
 
@@ -63,13 +63,12 @@ export function createListingCard(listing) {
           ${listing.title || "Untitled listing"}
         </h3>
 
-        <!-- Seller -->
         <div class="mt-3 flex items-center gap-2">
 
           <img
             src="${sellerAvatar}"
             alt="${sellerName}"
-            onerror="this.onerror=null; this.src='/src/assets/images/placeholder-image.png';"
+            onerror="this.onerror=null; this.src='${fallbackImage}';"
             class="h-7 w-7 rounded-full object-cover"
           />
 
@@ -79,7 +78,6 @@ export function createListingCard(listing) {
 
         </div>
 
-        <!-- Bid information -->
         <div
           class="mt-4 flex items-end justify-between gap-4 border-t border-gray-100 pt-4"
         >

@@ -16,6 +16,8 @@ export function renderNavbar() {
 
   const isLoggedIn = Boolean(user);
 
+  const fallbackImage = sitePath("images/placeholder-image.webp");
+
   navbar.innerHTML = `
     <nav class="border-b border-gray-200 bg-white">
       <div
@@ -79,11 +81,9 @@ export function renderNavbar() {
                 >
                   <img
                     id="navbar-avatar"
-                    src="${
-                      user.avatar?.url ||
-                      "/src/assets/images/placeholder-image.png"
-                    }"
+                    src="${user.avatar?.url || fallbackImage}"
                     alt=""
+                    onerror="this.onerror=null; this.src='${fallbackImage}';"
                     class="h-8 w-8 rounded-full object-cover sm:h-9 sm:w-9"
                   />
                 </a>
@@ -133,7 +133,7 @@ export function renderNavbar() {
   logoutButton?.addEventListener("click", logoutUser);
 
   if (isLoggedIn) {
-    updateNavbarProfile(navbar, user);
+    updateNavbarProfile(navbar, user, fallbackImage);
   }
 }
 
@@ -141,9 +141,10 @@ export function renderNavbar() {
  * Updates the navbar with the authenticated user's profile data and credits.
  * @param {HTMLElement} navbar - The navbar element.
  * @param {Object} user - The stored user data.
+ * @param {string} fallbackImage - The fallback image URL.
  * @returns {Promise<void>}
  */
-async function updateNavbarProfile(navbar, user) {
+async function updateNavbarProfile(navbar, user, fallbackImage) {
   const creditsElement = navbar.querySelector("#navbar-credits");
   const avatarElement = navbar.querySelector("#navbar-avatar");
 
@@ -154,14 +155,18 @@ async function updateNavbarProfile(navbar, user) {
       creditsElement.textContent = `${profile.credits.toLocaleString("no-NO")} cr`;
     }
 
-    if (avatarElement && profile.avatar?.url) {
-      avatarElement.src = profile.avatar.url;
+    if (avatarElement) {
+      avatarElement.src = profile.avatar?.url || fallbackImage;
     }
   } catch (error) {
     globalThis.console?.error("Failed to load navbar profile:", error);
 
     if (creditsElement) {
       creditsElement.textContent = "0 cr";
+    }
+
+    if (avatarElement) {
+      avatarElement.src = fallbackImage;
     }
   }
 }

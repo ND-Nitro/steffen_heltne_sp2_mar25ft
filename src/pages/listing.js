@@ -41,7 +41,7 @@ export async function initListingPage() {
 }
 
 function renderListing(listingElement, listing) {
-  const fallbackImage = "/src/assets/images/placeholder-image.png";
+  const fallbackImage = sitePath("images/placeholder-image.webp");
 
   const media =
     listing.media?.length > 0
@@ -59,8 +59,7 @@ function renderListing(listingElement, listing) {
 
   const sellerName = listing.seller?.name || "Unknown seller";
 
-  const sellerAvatar =
-    listing.seller?.avatar?.url || "/src/assets/images/placeholder-image.png";
+  const sellerAvatar = listing.seller?.avatar?.url || fallbackImage;
 
   const currentBidAmount = getCurrentBid(listing);
   const currentBid = currentBidAmount.toLocaleString("no-NO");
