@@ -267,7 +267,7 @@ async function handleCreateListing(event) {
   try {
     const listing = await createListing(listingData);
 
-    window.location.href = `/listing.html?id=${listing.id}`;
+    window.location.href = sitePath(`listing.html?id=${listing.id}`);
   } catch (error) {
     showError(errorElement, error.message || "Unable to create listing.");
   } finally {

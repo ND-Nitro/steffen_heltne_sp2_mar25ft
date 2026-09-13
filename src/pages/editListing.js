@@ -203,7 +203,7 @@ async function handleUpdateListing(event, id) {
   try {
     await updateListing(id, listingData);
 
-    window.location.href = `/listing.html?id=${id}`;
+    window.location.href = sitePath(`listing.html?id=${id}`);
   } catch (error) {
     showFormError(errorElement, error.message || "Unable to update listing.");
 
